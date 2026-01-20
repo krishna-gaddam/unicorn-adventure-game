@@ -52,9 +52,6 @@ Help the unicorn travel through the level safely, avoid hazards, and defeat the 
 (If this is a web game or contains an index.html)
 1. Open the project folder.
 2. If there is an `index.html`, open it in a modern web browser (Chrome, Firefox, Edge, or Safari).
-3. If the project requires a local server, run a simple server in the project directory, for example:
-   - Python 3: `python -m http.server 8000` then open `http://localhost:8000`
-   - Or use any static file server you prefer.
 
 If the repository contains specific build or run steps (for example using a game engine or a build tool), follow those instructions in the project files.
 
