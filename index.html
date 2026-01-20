@@ -189,7 +189,7 @@
         function initLevel() {
             platforms = [];
             cupcakes = [];
-            enemies = [];
+            enemies = []; // Ensure this is cleared
             
             // Ground is implicitly handled, but let's add some "Rainbow" platforms
             // Generate a simple level
@@ -215,11 +215,6 @@
                         width: 80, 
                         height: 20 
                     });
-                }
-
-                // Enemies (Grumpy Clouds) - easy to jump over
-                if(i % 5 === 0 && i > 1) {
-                    enemies.push({ x: 400 + i * 200, y: groundLevel - 40, width: 40, height: 30 });
                 }
             }
             
@@ -318,7 +313,6 @@
                 // 6. Boss Logic
                 if (gameState === 'BOSS') {
                     // Boss stays on the ground (easier for kids)
-                    // boss.y += Math.sin(frame * 0.05) * 2; // Removed floating/jumping behavior
                     
                     // Boss shoots fire
                     boss.attackTimer++;
@@ -375,9 +369,6 @@
                         vx: 8,
                         vy: 0
                     });
-                    // Consuming cupcakes as ammo logic removed to make it easier for kids.
-                    // Instead, collecting cupcakes just powers you up. 
-                    // Let's say having > 0 cupcakes enables magic.
                     createParticles(player.x + 40, player.y, '✨', 3);
                 }
 
@@ -526,11 +517,6 @@
                         let bob = Math.sin(frame * 0.1) * 5;
                         ctx.fillText(SPRITES.cupcake, c.x, c.y + bob);
                     }
-                });
-
-                // Draw Enemies
-                enemies.forEach(e => {
-                    ctx.fillText('🌧️', e.x, e.y + 30);
                 });
 
                 // Draw Dragon Boss
