@@ -77,7 +77,7 @@
     </div>
 
     <div class="controls-hint">
-        Use <span class="key">←</span> <span class="key">→</span> to Move • <span class="key">↑</span> to Jump • <span class="key">Space</span> for Magic ✨ • Avoid Rain Clouds 🌧️
+        Use <span class="key">←</span> <span class="key">→</span> to Move • <span class="key">↑</span> to Jump • <span class="key">Space</span> for Magic ✨ • <span class="key">Enter</span> to Restart
     </div>
 
     <script>
@@ -112,17 +112,26 @@
         };
 
         document.addEventListener('keydown', (e) => {
+            // Logic: Any key starts game. Enter restarts game.
+            if (gameState === 'START') {
+                resetGame();
+                return;
+            }
+
+            if (gameState === 'GAMEOVER' || gameState === 'WON') {
+                if (e.code === 'Enter') {
+                    resetGame();
+                }
+                return;
+            }
+
+            // Gameplay Controls
             if(e.key === 'ArrowLeft') keys.left = true;
             if(e.key === 'ArrowRight') keys.right = true;
             if(e.key === 'ArrowUp') keys.up = true;
             if(e.code === 'Space') {
                 keys.space = true;
                 e.preventDefault(); // Stop scrolling
-                if (gameState === 'PLAYING' || gameState === 'BOSS') {
-                    // Shooting handled in loop
-                } else if (gameState === 'START' || gameState === 'GAMEOVER' || gameState === 'WON') {
-                    resetGame();
-                }
             }
         });
 
@@ -590,11 +599,11 @@
 
             // Overlay UI for Win/Loss (Screen Space)
             if (gameState === 'START') {
-                drawOverlay("Unicorn's Rainbow Adventure!", "Press Space to Start", "rgba(255,255,255,0.8)");
+                drawOverlay("Unicorn's Rainbow Adventure!", "Press Any Key to Start", "rgba(255,255,255,0.8)");
                 ctx.font = "50px Arial";
                 ctx.fillText("🦄", canvas.width/2 - 25, canvas.height/2 - 50);
             } else if (gameState === 'GAMEOVER') {
-                drawOverlay("Oh no! Don't give up!", "Press Space to Try Again", "rgba(0,0,0,0.5)", "white");
+                drawOverlay("Oh no! Don't give up!", "Press Enter to Try Again", "rgba(0,0,0,0.5)", "white");
                 ctx.font = "50px Arial";
                 ctx.fillText("😢", canvas.width/2 - 25, canvas.height/2 - 50);
             } else if (gameState === 'WON') {
@@ -613,7 +622,7 @@
                     }
                 });
                 
-                drawOverlay("YOU WON!", "Amazing Job! Press Space to Play Again", "rgba(255,255,255,0.0)");
+                drawOverlay("YOU WON!", "Amazing Job! Press Enter to Play Again", "rgba(255,255,255,0.0)");
             }
         }
 
